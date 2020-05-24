@@ -1,2 +1,26 @@
 ---
-# tasks file for role1
+- name: Install Certbot.
+  package:
+    name:
+      - certbot
+      - python3-certbot-dns-rfc2136
+    state: present
+
+- name: Create rfc2136 credentials file.
+  template:
+    src: rfc2136.ini.j2
+    dest: /etc/letsencrypt/rfc2136.ini
+    mode: 0600
+
+- include_tasks: cert-request.yml
+  with_items: "{{ certbot_rfc2136_certs }}"
+  loop_control:
+    loop_var: cert
+
+- name: Add cron job for certbot renewal (if configured).
+  cron:
+    name: Certbot automatic renewal.
+    job: "certbot renew --quiet --no-self-upgrade"
+    minute: "{{ certbot_rfc2136_renew_minute }}"
+    hour: "{{ certbot_rfc2136_renew_hour }}"
+    user: "{{ certbot_rfc2136_renew_user }}"

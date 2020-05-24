@@ -1,0 +1,10 @@
+---
+- name: Check if certificate already exists.
+  stat:
+    path: /etc/letsencrypt/live/{{ cert.domains | first | replace('*.', '') }}/cert.pem
+  register: letsencrypt_cert
+
+- name: Request cert.
+  command: "{{ certbot_rfc2136_create_command }}"
+  loop: "{{ certbot_rfc2136_certs }}"
+  when: not letsencrypt_cert.stat.exists

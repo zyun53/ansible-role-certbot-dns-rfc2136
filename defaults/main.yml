@@ -1,2 +1,25 @@
 ---
-# defaults file for role1
+certbot_rfc2136_server: 192.168.2.1
+certbot_rfc2136_port: 53
+certbot_rfc2136_name: keyname.
+certbot_rfc2136_secret: 4q4wM/2I180UXoMyN4INVhJNi8V9BCV+jMw2mXgZw/CSuxUT8C7NKKFs AmKd7ak51vWKgSl12ib86oQRPkpDjg==
+certbot_rfc2136_algorithm: HMAC-SHA512
+
+certbot_rfc2136_create_command: >-
+  certbot certonly --noninteractive --agree-tos
+  --email {{ cert.email }}
+  --dns-rfc2136
+  --dns-rfc2136-credentials /etc/letsencrypt/rfc2136.ini
+  -d {{ cert.domains | join(',') }}
+
+certbot_rfc2136_certs: []
+# - email: administrator@example.com
+#   domains:
+#     - example1.com
+#     - example2.com
+# - domains:
+#     - example3.com
+
+certbot_rfc2136_renew_minute: '32'
+certbot_rfc2136_renew_hour: '11'
+certbot_rfc2136_renew_user: root

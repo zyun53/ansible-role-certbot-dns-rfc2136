@@ -1,7 +1,9 @@
-Role Name
+Ansible Role: certbot-dns-rfc2136
 =========
 
-A brief description of the role goes here.
+Support certbot-dns-rfc2136.
+
+geerlingguy/ansible-role-certbot: Ansible Role - Certbot (for Let's Encrypt) https://github.com/geerlingguy/ansible-role-certbot
 
 Requirements
 ------------
